@@ -9,11 +9,17 @@
     "postinstall": "tsc"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.14.1",
     "typescript": "^5.5.3"
   },
   "engines": {
     "node": "22.x"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
 }
