@@ -5,15 +5,14 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node src/server.js",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b",
     "postinstall": "tsc"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^22.14.1",
-    "typescript": "^5.5.3",
-    "vite": "^6.2.0"
+    "typescript": "^5.5.3"
   },
   "engines": {
     "node": "22.x"
