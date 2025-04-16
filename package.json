@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "start": "node src/server.js",
+    "build": "tsc -b && vite build",
+    "postinstall": "tsc"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
