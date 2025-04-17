@@ -8,7 +8,8 @@ import cors from "cors";
 // } from "./database";
 
 import {
-  testDB
+    testDB,
+    initDB,
 } from "./database";
 
 const app = express();
@@ -29,11 +30,15 @@ const PORT = process.env.PORT || 3000;
 
 // test API calls
 app.get("/api", async (_, res) => {
-  console.log("/api route hit");
-  res.json({ message: "API is working!" });
+    console.log("/api route hit");
+    res.json({message: "API is working!"});
 });
 
-app.get("/db", async (_, res) => {
+app.get("/initdb", async (_, res) => {
+    initDB();
+})
+
+app.get("/testdb", async (_, res) => {
     testDB();
 })
 

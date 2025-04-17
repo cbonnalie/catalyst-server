@@ -1,6 +1,4 @@
-﻿import path from "path";
-
-interface Event {
+﻿interface Event {
   event_type: string;
   description: string;
   percent_3months: number;
@@ -18,15 +16,17 @@ const pool = new Pool({
     },
 })
 
-pool.connect()
+export function initDB() {
+    pool.connect()
 
-pool.query('SELECT table_schema,table_name FROM information_schema.tables;', (err: any, res: { rows: any; }) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-    }
-    pool.end();
-});
+    pool.query('SELECT table_schema,table_name FROM information_schema.tables;', (err: any, res: { rows: any; }) => {
+        if (err) throw err;
+        for (let row of res.rows) {
+            console.log(JSON.stringify(row));
+        }
+        pool.end();
+    });
+}
 
 export function testDB() {
     pool.query('SELECT NOW()', (err: any, res: any) => {
