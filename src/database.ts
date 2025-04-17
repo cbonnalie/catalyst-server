@@ -16,26 +16,26 @@ const pool = new Pool({
     },
 })
 
-export function initDB() {
-    pool.connect()
-
-    pool.query('SELECT table_schema,table_name FROM information_schema.tables;', (err: any, res: { rows: any; }) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-            console.log(JSON.stringify(row));
-        }
-        pool.end();
-    });
+export async function initDB() {
+    try {
+        const res = await pool.query('SELECT table_schema,table_name FROM information_schema.tables;');
+        console.log("Database tables:", res.rows);
+        return res.rows;
+    } catch (err) {
+        console.error("Database initialization error:", err);
+        throw err;
+    }
 }
 
-export function testDB() {
-    pool.query('SELECT NOW()', (err: any, res: any) => {
-        if (err) {
-            console.error('Error executing query', err.stack);
-        } else {
-            console.log('Database connection successful:', res.rows[0]);
-        }
-    });
+export async function testDB() {
+    try {
+        const res = await pool.query('SELECT NOW()');
+        console.log('Database connection successful:', res.rows[0]);
+        return res.rows[0];
+    } catch (err) {
+        console.error('Error executing query', err);
+        throw err;
+    }
 }
 
 // define a type for the db connection
