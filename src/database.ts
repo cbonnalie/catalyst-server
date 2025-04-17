@@ -20,7 +20,7 @@ const pool = new Pool({
 
 pool.connect()
 
-pool.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+pool.query('SELECT table_schema,table_name FROM information_schema.tables;', (err: any, res: { rows: any; }) => {
     if (err) throw err;
     for (let row of res.rows) {
         console.log(JSON.stringify(row));
