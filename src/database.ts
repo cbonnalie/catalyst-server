@@ -1,20 +1,38 @@
-﻿// import sqlite3 from "sqlite3";
-// import { Database, open } from "sqlite";
-// import path from "path";
-//
-// interface Event {
-//   event_type: string;
-//   description: string;
-//   percent_3months: number;
-//   percent_6months: number;
-//   percent_1year: number;
-//   percent_5years: number;
-// }
-//
-// // absolute path to db
-// const dbPath = path.resolve(__dirname, "..", "databases", "events.db");
-//
-// // define a type for the db connection
+﻿import path from "path";
+
+interface Event {
+  event_type: string;
+  description: string;
+  percent_3months: number;
+  percent_6months: number;
+  percent_1year: number;
+  percent_5years: number;
+}
+
+// absolute path to db
+const dbPath = path.resolve(__dirname, "..", "databases", "events.db");
+
+const { Client } = require('pg');
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+client.connect();
+
+client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err: any, res: { rows: any; }) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+        console.log(JSON.stringify(row));
+    }
+    client.end();
+});
+
+
+// define a type for the db connection
 // let db: Database | null = null;
 //
 // // init db connection
