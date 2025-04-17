@@ -1,32 +1,15 @@
 ﻿import express from "express";
 import cors from "cors";
-// import {
-//   initializeDatabase,
-//   getDatabase,
-//   getFiveEvents,
-//   getXEvents,
-// } from "./database";
-
 import {
     testDB,
     initDB,
 } from "./database";
 
 const app = express();
-// allows frontend requests
 app.use(cors());
-// allows req.body
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-
-// async function startServer() {
-//   try {
-//     await initializeDatabase();
-//   } catch (err) {
-//     console.log("Error fetching database", err);
-//   }
-// }
 
 // test API calls
 app.get("/api", async (_, res) => {
@@ -35,11 +18,23 @@ app.get("/api", async (_, res) => {
 });
 
 app.get("/initdb", async (_, res) => {
-    initDB();
+    try {
+        const tables = await initDB();
+        res.json({ success: true, tables });
+    } catch (err) {
+        console.error("Error in /initdb route:", err);
+        res.status(500).json({ error: "Database initialization failed" });
+    }
 })
 
 app.get("/testdb", async (_, res) => {
-    testDB();
+    try {
+        const result = await testDB();
+        res.json({ success: true, timestamp: result });
+    } catch (err) {
+        console.error("Error in /testdb route:", err);
+        res.status(500).json({ error: "Database test failed" });
+    }
 })
 
 // app.get("/db", async () => {
