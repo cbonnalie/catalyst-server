@@ -9,27 +9,25 @@ interface Event {
   percent_5years: number;
 }
 
-// absolute path to db
-const dbPath = path.resolve(__dirname, "..", "databases", "events.db");
+const { Pool } = require('pg');
 
-const { Client } = require('pg');
-
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+const connectStr = process.env.DATABASE_URL;
+const pool = new Pool({
+    connectionString: connectStr,
     ssl: {
-        rejectUnauthorized: false
-    }
-});
+        rejectUnauthorized: false,
+    },
+})
 
-client.connect();
-
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err: any, res: { rows: any; }) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-    }
-    client.end();
-});
+export function testDB() {
+    pool.query('SELECT NOW()', (err: any, res: any) => {
+        if (err) {
+            console.error('Error executing query', err.stack);
+        } else {
+            console.log('Database connection successful:', res.rows[0]);
+        }
+    });
+}
 
 
 // define a type for the db connection

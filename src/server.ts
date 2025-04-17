@@ -7,6 +7,10 @@ import cors from "cors";
 //   getXEvents,
 // } from "./database";
 
+import {
+  testDB
+} from "./database";
+
 const app = express();
 // allows frontend requests
 app.use(cors());
@@ -28,6 +32,10 @@ app.get("/api", async (_, res) => {
   console.log("/api route hit");
   res.json({ message: "API is working!" });
 });
+
+app.get("/db", async (_, res) => {
+    testDB();
+})
 
 // app.get("/db", async () => {
 //   try {
