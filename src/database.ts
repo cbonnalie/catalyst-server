@@ -38,44 +38,12 @@ export async function testDB() {
     }
 }
 
-// define a type for the db connection
-// let db: Database | null = null;
-//
-// // init db connection
-// export async function initializeDatabase(): Promise<void> {
-//   try {
-//     db = await open({
-//       filename: dbPath,
-//       driver: sqlite3.Database,
-//     });
-//   } catch (err) {
-//     console.error("Error initializing database:", err);
-//     throw err;
-//   }
-// }
-//
-// export function getDatabase(): Database {
-//   if (!db) {
-//     throw new Error("Database does not exist. Call initializeDatabase() first");
-//   }
-//   return db;
-// }
-//
-// export async function getFiveEvents(): Promise<Event[] | undefined> {
-//   return db?.all<Event[]>(
-//     `SELECT *
-//          FROM events
-//          ORDER BY RANDOM() LIMIT 5
-//         `,
-//   );
-// }
-//
-// export async function getXEvents(x: number): Promise<Event[] | undefined> {
-//   return db?.all<Event[]>(
-//     `SELECT *
-//          FROM events
-//          ORDER BY RANDOM() LIMIT ?
-//         `,
-//     [x],
-//   );
-// }
+export async function getXEvents(x: number): Promise<Event[] | undefined> {
+    try {
+        const res = await pool.query('SELECT * FROM events ORDER BY RANDOM() LIMIT $1', [x]);
+        return res.rows;
+    } catch (err) {
+        console.error('Error fetching events', err);
+        throw err;
+    }
+}
