@@ -11,13 +11,14 @@ interface Event {
 
 const { Pool } = require('pg');
 
-const connectStr = process.env.DATABASE_URL;
 const pool = new Pool({
-    connectionString: connectStr,
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false,
     },
 })
+
+pool.connect()
 
 export function testDB() {
     pool.query('SELECT NOW()', (err: any, res: any) => {
@@ -28,7 +29,6 @@ export function testDB() {
         }
     });
 }
-
 
 // define a type for the db connection
 // let db: Database | null = null;
