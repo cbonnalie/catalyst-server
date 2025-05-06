@@ -7,10 +7,11 @@ import {
 } from "./database";
 
 const app = express();
-const clientURL = process.env.CLIENT_URL || "http://localhost:5173";
-console.log("Client URL:", clientURL);
+const clientURL = String(process.env.CLIENT_URL);
+const localURL = String(process.env.LOCAL_URL);
+
 app.use(cors({
-    origin: clientURL,
+    origin: [clientURL, localURL],
 }));
 app.use(express.json());
 
