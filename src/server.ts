@@ -43,6 +43,7 @@ app.get("/testdb", async (_, res) => {
     }
 })
 
+// fetch x events from the db
 app.get("/api/xEvents", async (req, res) => {
   const x = parseInt(req.query.x as string);
   try {
